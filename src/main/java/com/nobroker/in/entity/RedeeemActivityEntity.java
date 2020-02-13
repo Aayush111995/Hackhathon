@@ -14,10 +14,10 @@ public class RedeeemActivityEntity {
     @Column
     private int id;
 
-    @Column
+    @Column(name = "activity_name")
     private String activityName;
 
-    @Column
+    @Column(name = "amount")
     private String amount;
 
     

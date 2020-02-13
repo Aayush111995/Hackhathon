@@ -11,16 +11,16 @@ import javax.persistence.Id;
 public class CreditActivityEntity {
 
     @Id
-    @Column
+    @Column(name = "id")
     private int id;
 
-    @Column
+    @Column(name = "activity_name")
     private String activityName;
 
-    @Column
+    @Column(name = "ref_amount")
     private String refAmount;
 
-    @Column
+    @Column(name = "referal_amount")
     private String referalAmount;
 
 }
