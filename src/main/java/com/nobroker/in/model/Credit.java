@@ -10,7 +10,6 @@ public class Credit {
 
     private int id;
 
-
     private String activityName;
 
 

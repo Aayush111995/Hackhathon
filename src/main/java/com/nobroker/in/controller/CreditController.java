@@ -1,33 +1,49 @@
 package com.nobroker.in.controller;
 
-import com.nobroker.in.entity.CreditActivityEntity;
-import com.nobroker.in.entity.RedeeemActivityEntity;
-import com.nobroker.in.model.Credit;
-import com.nobroker.in.repository.CreditRepository;
-import com.nobroker.in.repository.RedeemRepository;
+//import com.nobroker.in.entity.CreditActivityEntity;
+
+import com.nobroker.in.entity.Credit;
 import com.nobroker.in.service.CreditService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
+import java.util.List;
 
 @RestController
+@CrossOrigin
+@RequestMapping("/api/v1/credit")
+
 public class CreditController {
     @Autowired
-    private CreditService creditRepository;
+    private CreditService creditService;
 
-    @RequestMapping(value = "/credit/update",method = RequestMethod.POST)
-    public ResponseEntity<CreditActivityEntity> updateCreditDataById(@RequestBody Credit credit){
-        CreditActivityEntity creditActivityEntity=creditRepository.getbyId(String.valueOf(credit.getId()));
-        creditActivityEntity.setRefAmount(credit.getRefAmount());
-        creditActivityEntity.setReferalAmount(credit.getReferalAmount());
-            creditRepository.save(creditActivityEntity);
-        return new ResponseEntity<>(creditActivityEntity, HttpStatus.OK);
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    public Credit updateCreditDataById(@RequestParam String creditId, @RequestParam String amount){
+        Credit credit = creditService.updateCredit(creditId, amount);
+        return credit;
     }
-    @RequestMapping(value = "/credit/all",method = RequestMethod.GET)
-    public ResponseEntity getAllCreditData(){ ;
-        return new ResponseEntity(creditRepository.getAll(), HttpStatus.OK);
+
+    @RequestMapping(value = "/all",method = RequestMethod.GET)
+    public List<Credit> getAllCreditData(){
+        List<Credit> allCredits = creditService.getAll();
+        return allCredits;
     }
+
+    @RequestMapping(value = "/delete",method = RequestMethod.DELETE)
+    public Credit deleteCredit(@RequestParam String id){
+        Credit credit = creditService.deleteCredit(id);
+        return credit;
+    }
+    @CrossOrigin
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public Credit addNewCredit(@RequestParam String activity,
+                                       @RequestParam String amount){
+        Credit credit = creditService.addNewCredit(activity, amount);
+        return credit;
+    }
+
 }

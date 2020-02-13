@@ -1,8 +1,9 @@
 package com.nobroker.in.repository;
 
-import com.nobroker.in.entity.CreditActivityEntity;
-import com.nobroker.in.entity.RedeeemActivityEntity;
+import com.nobroker.in.entity.Redeem;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface RedeemRepository extends CrudRepository<RedeeemActivityEntity, String> {
+@Repository
+public interface RedeemRepository extends CrudRepository<Redeem, String> {
 }

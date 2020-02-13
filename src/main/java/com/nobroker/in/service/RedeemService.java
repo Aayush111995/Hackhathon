@@ -1,14 +1,16 @@
 package com.nobroker.in.service;
 
 
-import com.nobroker.in.entity.CreditActivityEntity;
-import com.nobroker.in.entity.RedeeemActivityEntity;
+//import com.nobroker.in.entity.CreditActivityEntity;
+
+import com.nobroker.in.entity.Credit;
+import com.nobroker.in.entity.Redeem;
 import com.nobroker.in.repository.RedeemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class RedeemService {
@@ -16,14 +18,28 @@ public class RedeemService {
     @Autowired
     private RedeemRepository redeemRepository;
 
-    public RedeeemActivityEntity getById(String id) {
+    public Redeem getById(String id) {
         return redeemRepository.findById(id).get();
     }
 
-    public List<RedeeemActivityEntity> getAll(){
-        return (List<RedeeemActivityEntity>) redeemRepository.findAll();
+    public List<Redeem> getAll(){
+        return (List<Redeem>) redeemRepository.findAll();
     }
-    public void save(RedeeemActivityEntity redeeemActivityEntity){
-        redeemRepository.save(redeeemActivityEntity);
+
+    public Redeem addNewRedeem(String activity, String amount){
+        Redeem redeem = new Redeem();
+        redeem.setActivityName(activity);
+        String uniqueID = UUID.randomUUID().toString();
+        redeem.setId(uniqueID);
+        redeem.setAmount(String.valueOf(amount));
+        redeemRepository.save(redeem);
+        return redeem;
     }
+
+    public Redeem deleteRedeem(String id){
+        Redeem redeem = getById(id);
+        redeemRepository.delete(redeem);
+        return redeem;
+    }
+
 }

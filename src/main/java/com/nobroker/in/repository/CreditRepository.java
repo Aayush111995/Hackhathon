@@ -1,7 +1,9 @@
 package com.nobroker.in.repository;
 
-import com.nobroker.in.entity.CreditActivityEntity;
+import com.nobroker.in.entity.Credit;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface CreditRepository extends CrudRepository<CreditActivityEntity, String> {
+@Repository
+public interface CreditRepository extends CrudRepository<Credit, String> {
 }

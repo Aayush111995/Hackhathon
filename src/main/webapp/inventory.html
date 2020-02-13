@@ -218,7 +218,7 @@
                 <div class="tabs-container">
                     <ul class="nav nav-tabs" role="tablist">
                         <li><a class="nav-link active" data-toggle="tab" href="#tab-1"> Credit Table</a></li>
-                        <li><a class="nav-link" data-toggle="tab" href="#tab-2">Debit Table</a></li>
+                        <li><a class="nav-link" data-toggle="tab" href="#tab-2" onclick=loadDebitTable()>Debit Table</a></li>
                     </ul>
                     <div class="tab-content">
                         <div role="tabpanel" id="tab-1" class="tab-pane active">
@@ -245,12 +245,13 @@
                                                             <h4 class="modal-title">Add New Activity</h4>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <input type="text" placeholder="Activity">
-                                                            <input type="text" placeholder="Amount">
+                                                            <input type="text" placeholder="Activity" id="newCreditActivity">
+                                                            <input type="text" placeholder="Amount" id="newCreditAmount">
 
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                                                <button type="button" class="btn btn-primary" id="addNewCredit">Save changes</button>
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -260,39 +261,7 @@
                                         </div>
 
                                         <div class="ibox-content">
-
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Activity</th>
-                                                    <th>Amount</th>
-                                                    <th></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Register</td>
-                                                    <td><input type="text" placeholder="Rs."></td>
-                                                    <td><button type="button" class="btn btn-xs btn-primary">Save</button>
-                                                        <button type="button" class="btn btn-xs btn-danger">Danger</button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>Jacob</td>
-                                                    <td>Thornton</td>
-                                                    <td>@fat</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>Larry</td>
-                                                    <td>the Bird</td>
-                                                    <td>@twitter</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-
+                                            <div id="here_credet_table"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -322,12 +291,12 @@
                                                             <h4 class="modal-title">Add New Activity</h4>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <input type="text" placeholder="Activity">
-                                                            <input type="text" placeholder="Amount">
+                                                            <input type="text" placeholder="Activity" id="newDebitActivity">
+                                                            <input type="text" placeholder="Amount" id="newDebitAmount">
 
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                                                <button type="button" class="btn btn-primary" id="addNewDebit" onclick=addNewDebit()>Save changes</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -338,37 +307,7 @@
 
                                         <div class="ibox-content">
 
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Activity</th>
-                                                    <th>Amount</th>
-                                                    <th></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Register</td>
-                                                    <td><input type="text" placeholder="Rs."></td>
-                                                    <td><button type="button" class="btn btn-xs btn-primary">Save</button>
-                                                        <button type="button" class="btn btn-xs btn-danger">Danger</button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>Jacob</td>
-                                                    <td>Thornton</td>
-                                                    <td>@fat</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>Larry</td>
-                                                    <td>the Bird</td>
-                                                    <td>@twitter</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
+                                            <div id="here_redeem_table"></div>
 
                                         </div>
                                     </div>
@@ -456,4 +395,136 @@
 <!-- Dual Listbox -->
 <script src="js/plugins/dualListbox/jquery.bootstrap-duallistbox.js"></script>
 <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+
+<script>
+ $(document).ready(function() {
+    var allAPI = "http://localhost:8080/api/v1/credit/all";
+    $.ajax({
+		    type: "GET",
+		    url: allAPI,
+		    contentType: 'application/json',
+		    success: function(data) {
+		    var creditTable = "<table class=table>"+
+                                                "<thead>"+
+                                                "<tr><tbody>"+
+                                                    "<th>#</th>"+
+                                                    "<th>Activity</th>"+
+                                                    "<th>Amount</th>"+
+                                                    "<th></th>"+
+                                                "</tr>"+
+                                                "</thead>"+
+                                                "<tbody>"
+		    for(i=0; i<data.length; i++){
+		        creditTable += "<tr>" +
+                                        "<td>"+(i+1)+"</td>" +
+                                        "<td>"+data[i].activityName+"</td>" +
+                                        "<td><input type=text value="+data[i].refAmount+"></td>" +
+                                        "<td><button type=button class=btn btn-xs btn-primary id="+data[i].id+">Save</button>" +
+                                        "<button type=button class=btn btn-xs btn-danger deleteCredit id="+data[i].id+" onclick=deletCredit(this.id)>Delete</button></td>" +
+                                    "</tr>"
+		    }
+
+		    creditTable +=  "</tbody></table>"
+		    $("#here_credet_table").append(creditTable);
+		    },
+		    error: function(data) {alert("ajax error"); },
+		    dataType: 'json'
+		});
+			    		});
+    $('#addNewCredit').click(function(req, res) {
+        var activity = document.getElementById("newCreditActivity").value;
+        var amount = document.getElementById("newCreditAmount").value;
+        var api = "http://localhost:8080/api/v1/credit/add?activity="+activity+"&amount="+amount;
+        $.ajax({
+		    type: "POST",
+		    url: api,
+		    contentType: 'application/json',
+		    success: function(data) {
+		    	 location.reload();
+		    },
+		    error: function(data) {alert("ajax error"); },
+		    dataType: 'json'
+		});
+
+});
+function deletCredit(creditId){
+        var deleteCredit = "http://localhost:8080/api/v1/credit/delete?id="+creditId;
+        $.ajax({
+		    type: "DELETE",
+		    url: deleteCredit,
+		    contentType: 'application/json',
+		    success: function(data) {
+		        location.reload();
+		    },
+		    error: function(data) {alert("ajax error"); },
+		    dataType: 'json'
+		});
+    }
+
+    function loadDebitTable(){
+        var allRedeemAPI = "http://localhost:8080/api/v1/redeem/all";
+    $.ajax({
+		    type: "GET",
+		    url: allRedeemAPI,
+		    contentType: 'application/json',
+		    success: function(data) {
+		    var redeemTable = "<table class=table>"+
+                                                "<thead>"+
+                                                "<tr><tbody>"+
+                                                    "<th>#</th>"+
+                                                    "<th>Activity</th>"+
+                                                    "<th>Amount</th>"+
+                                                    "<th></th>"+
+                                                "</tr>"+
+                                                "</thead>"+
+                                                "<tbody>"
+		    for(i=0; i<data.length; i++){
+		        redeemTable += "<tr>" +
+                                        "<td>"+(i+1)+"</td>" +
+                                        "<td>"+data[i].activityName+"</td>" +
+                                        "<td><input type=text value="+data[i].amount+"></td>" +
+                                        "<td><button type=button class=btn btn-xs btn-primary id="+data[i].id+">Save</button>" +
+                                        "<button type=button class=btn btn-xs btn-danger deleteRedeem id="+data[i].id+" onclick=deletRedeem(this.id)>Delete</button></td>" +
+                                    "</tr>"
+		    }
+
+		    redeemTable +=  "</tbody></table>"
+		    $("#here_redeem_table").append(redeemTable);
+		    },
+		    error: function(data) {alert("ajax error"); },
+		    dataType: 'json'
+		});
+    }
+
+    function deletRedeem(redeemId){
+        var deleteRedeem = "http://localhost:8080/api/v1/redeem/delete?id="+redeemId;
+        $.ajax({
+		    type: "DELETE",
+		    url: deleteRedeem,
+		    contentType: 'application/json',
+		    success: function(data) {
+		        location.reload();
+		    },
+		    error: function(data) {alert("ajax error"); },
+		    dataType: 'json'
+		});
+    }
+
+
+    function addNewDebit(){
+        var activity = document.getElementById("newDebitActivity").value;
+        var amount = document.getElementById("newDebitAmount").value;
+        var DeabitApi = "http://localhost:8080/api/v1/redeem/add?activity="+activity+"&amount="+amount;
+        $.ajax({
+		    type: "POST",
+		    url: DeabitApi,
+		    contentType: 'application/json',
+		    success: function(data) {
+		    location.reload();
+		    },
+		    error: function(data) {alert("ajax error"); },
+		    dataType: 'json'
+		});
+    }
+</script>
 </html>
