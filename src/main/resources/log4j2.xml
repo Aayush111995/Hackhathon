@@ -13,9 +13,7 @@
 
 
 	<Loggers>
-		<Logger name="org.springframework" level="ERROR" additivity="false"></Logger>
-		<Logger name="org.hibernate" level="ERROR" additivity="false"></Logger>
-		<Logger name="org.apache" level="ERROR" additivity="false"></Logger>
+
 
 
 		<asyncLogger name="com.nobroker.in" level="INFO"

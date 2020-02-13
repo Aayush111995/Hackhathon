@@ -23,7 +23,7 @@ public class DataConfiguration {
         dataSource.setUsername("root");
         dataSource.setPassword("admin");
         dataSource.setUrl(
-                "jdbc:mysql://localhost:3306/myDb?createDatabaseIfNotExist=true");
+                "jdbc:mysql://localhost:3320/myDb?createDatabaseIfNotExist=true");
 
         return dataSource;
     }
