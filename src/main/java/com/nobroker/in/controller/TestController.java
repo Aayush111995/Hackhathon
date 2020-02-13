@@ -14,7 +14,7 @@ public class TestController {
     @Autowired
     UserRepository userRepository;
 
-    @RequestMapping(name = "/",method = RequestMethod.POST)
+    //@RequestMapping(name = "/",method = RequestMethod.POST)
     public void x(){
         UserEntity userEntity=new UserEntity();
         userEntity.setId(2);
