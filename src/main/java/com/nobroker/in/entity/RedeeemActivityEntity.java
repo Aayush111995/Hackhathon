@@ -1,17 +1,24 @@
 package com.nobroker.in.entity;
 
-
 import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity(name = "user")
+@Entity(name = "redeem_activity")
 @Data
-public class UserEntity {
+public class RedeeemActivityEntity {
+
+    @Id
+    @Column
+    private int id;
 
     @Column
-    @Id
-    private int id;
+    private String activityName;
+
+    @Column
+    private String amount;
+
+    
 }
