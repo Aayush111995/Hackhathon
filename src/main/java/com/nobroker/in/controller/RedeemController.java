@@ -38,4 +38,10 @@ public class RedeemController {
         Redeem redeem = redeemService.addNewRedeem(activity, amount);
         return redeem;
     }
+
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    public Redeem updateCreditDataById(@RequestParam String redeemId, @RequestParam String amount){
+        Redeem redeem = redeemService.updateRedeem(redeemId, amount);
+        return redeem;
+    }
 }

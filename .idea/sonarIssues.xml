@@ -53,6 +53,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/nobroker/in/entity/Redeem.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/com/nobroker/in/model/Credit.java">
           <value>
             <set />
@@ -109,6 +114,11 @@
           </value>
         </entry>
         <entry key="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar!/java/util/Optional.class">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar!/sun/net/www/http/HttpClient.class">
           <value>
             <set />
           </value>

@@ -42,4 +42,11 @@ public class RedeemService {
         return redeem;
     }
 
+    public Redeem updateRedeem(String redeemId, String amount){
+        Redeem redeem = getById(redeemId);
+        redeem.setAmount(amount);
+        redeemRepository.save(redeem);
+        return redeem;
+    }
+
 }

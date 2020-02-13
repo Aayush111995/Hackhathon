@@ -418,8 +418,8 @@
 		        creditTable += "<tr>" +
                                         "<td>"+(i+1)+"</td>" +
                                         "<td>"+data[i].activityName+"</td>" +
-                                        "<td><input type=text value="+data[i].refAmount+"></td>" +
-                                        "<td><button type=button class=btn btn-xs btn-primary id="+data[i].id+">Save</button>" +
+                                        "<td><input id=credit-"+data[i].id+" type=text value="+data[i].refAmount+"></td>" +
+                                        "<td><button type=button class=btn btn-xs btn-primary id="+data[i].id+" onclick=editCredit(this.id)>Save</button>" +
                                         "<button type=button class=btn btn-xs btn-danger deleteCredit id="+data[i].id+" onclick=deletCredit(this.id)>Delete</button></td>" +
                                     "</tr>"
 		    }
@@ -482,8 +482,8 @@ function deletCredit(creditId){
 		        redeemTable += "<tr>" +
                                         "<td>"+(i+1)+"</td>" +
                                         "<td>"+data[i].activityName+"</td>" +
-                                        "<td><input type=text value="+data[i].amount+"></td>" +
-                                        "<td><button type=button class=btn btn-xs btn-primary id="+data[i].id+">Save</button>" +
+                                        "<td><input id=redeem-"+data[i].id+" type=text value="+data[i].amount+"></td>" +
+                                        "<td><button type=button class=btn btn-xs btn-primary id="+data[i].id+" onclick=editRedeem(this.id)>Save</button>" +
                                         "<button type=button class=btn btn-xs btn-danger deleteRedeem id="+data[i].id+" onclick=deletRedeem(this.id)>Delete</button></td>" +
                                     "</tr>"
 		    }
@@ -504,6 +504,7 @@ function deletCredit(creditId){
 		    contentType: 'application/json',
 		    success: function(data) {
 		        location.reload();
+		         $('#mytabs a[href="#second"]').tab('show');
 		    },
 		    error: function(data) {alert("ajax error"); },
 		    dataType: 'json'
@@ -526,5 +527,40 @@ function deletCredit(creditId){
 		    dataType: 'json'
 		});
     }
+
+    function editCredit(id){
+        var inputId = "credit-"+id;
+        var val = document.getElementById(inputId).value;
+        var updateAPI = "http://localhost:8080/api/v1/credit/update?creditId="+id+"&amount="+val;
+        $.ajax({
+		    type: "POST",
+		    url: updateAPI,
+		    contentType: 'application/json',
+		    success: function(data) {
+		        location.reload();
+		    },
+		    error: function(data) {alert("ajax error"); },
+		    dataType: 'json'
+		});
+	}
+
+    function editRedeem(id){
+        var inputId = "redeem-"+id;
+        var val = document.getElementById(inputId).value;
+        var updateRedeemAPI = "http://localhost:8080/api/v1/redeem/update?redeemId="+id+"&amount="+val;
+        $.ajax({
+		    type: "POST",
+		    url: updateRedeemAPI,
+		    contentType: 'application/json',
+		    success: function(data) {
+		        location.reload();
+		    },
+		    error: function(data) {alert("ajax error"); },
+		    dataType: 'json'
+		});
+
+    }
 </script>
 </html>
+
+href="#tab-2"

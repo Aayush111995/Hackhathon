@@ -29,6 +29,8 @@ public class DataConfiguration {
         dataSource.setPassword("admin");
         dataSource.setUrl(
                 "jdbc:mysql://localhost:3320/myDb?createDatabaseIfNotExist=true");
+//                "jdbc:mysql://192.168.8.16:3306/nobroker?createDatabaseIfNotExist=true");
+
 
         return dataSource;
     }
